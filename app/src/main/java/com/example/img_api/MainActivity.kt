@@ -3,7 +3,6 @@ package com.example.img_api
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,12 +23,12 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+
 
 
 class MainActivity : ComponentActivity() {
@@ -52,88 +51,148 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun MainDisplay() {
-    var category by remember { mutableStateOf("movie") }
     var width by remember { mutableStateOf("1000") }
     var height by remember { mutableStateOf("1220") }
-    var imageUrl by remember { mutableStateOf("https://api.lorem.space/image/movie?w=1000&h=1220") }
-    var hint by remember { mutableStateOf("") }
+    var imageUrl by remember { mutableStateOf("https://loremflickr.com/1000/1220") }
+    var color by remember { mutableStateOf("All Color") }
+    var first by remember { mutableStateOf("")}
+    var second by remember { mutableStateOf("")}
+    var operation by remember { mutableStateOf("or")}
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White))
-    {
-        Column(
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Random Image App",
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            textAlign = TextAlign.Center,
+            fontSize = 30.sp
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = "Random Image App",
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                textAlign = TextAlign.Center,
-                fontSize = 30.sp
-            )
-            Spacer(modifier = Modifier.height(22.dp))
-            CategoryDropdown(category = category) {
-                category = it
-            }
-            Spacer(modifier = Modifier.height(16.dp))
             TextField(
                 value = width,
                 onValueChange = { width = it },
                 label = { Text("Width") },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                modifier = Modifier
+                    .weight(1f)
+                    .widthIn(max = 200.dp)
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             TextField(
                 value = height,
                 onValueChange = { height = it },
                 label = { Text("Height") },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = {
-                    val w = width.toIntOrNull()
-                    val h = height.toIntOrNull()
-                    if (w == null || h == null || w !in 8..2000 || h !in 8..2000) {
-                        hint = "Hint: Width and Height are between 8 and 2000."
-                        imageUrl = ""
-                    } else {
-                        imageUrl = "https://api.lorem.space/image/$category?w=$w&h=$h"
-                        hint = ""
-                    }
-                }
-            ) {
-                Text("Display Image")
-            }
-            if (hint.isNotEmpty()) {
-                Text(
-                    hint,
-                    color = Color.Red
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Box(
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(400.dp)
-                    .background(Color.White)
-            ) {
-                if (imageUrl.isNotEmpty()) {
-                    DisplayImage(url = imageUrl, modifier = Modifier.fillMaxSize())
+                    .weight(1f)
+                    .widthIn(max = 200.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        ColorDropdown(color = color, modifier = Modifier
+            .fillMaxWidth()) {
+            color = it
+        }
+        Spacer(modifier = Modifier.height(0.dp))
+        Text(text = "Warning: If you do not specify a keyword, selecting a color will cause the image not to be displayed.", fontSize = 13.sp)
+        Spacer(modifier = Modifier.height(5.dp))
+        Text(text = "Please enter a keyword. If left blank, the app will randomly select a picture of a kitten for you. Optional keyword can be ignore.", fontWeight = FontWeight.Medium, fontSize = 17.sp)
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            TextField(
+                value = first,
+                onValueChange = { first = it },
+                label = { Text("Keyword") },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
+                modifier = Modifier
+                    .weight(1f)
+                    .widthIn(max = 200.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            TextField(
+                value = second,
+                onValueChange = { second = it },
+                label = { Text("Optional keyword") },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
+                modifier = Modifier
+                    .weight(1f)
+                    .widthIn(max = 200.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        OperationDropdown(operation = operation, modifier = Modifier
+            .weight(1f)
+            .widthIn(max = 200.dp)) {
+            operation = it
+        }
+        Button(
+            onClick = {
+                if (color == "Grey") {color = "g"}
+                if (color == "Red") {color = "red"}
+                if (color == "Green") {color = "green"}
+                if (color == "Blue") {color = "blue"}
+                if (color == "Pixel") {color = "p"}
+                val w = width.toIntOrNull()
+                val h = height.toIntOrNull()
+                val c = color
+                val f = first
+                val s = second
+                val o = operation
+                if ( c == "All Color" && f == "" && s == "" ) {
+                    imageUrl = "https://loremflickr.com/$w/$h"
+                } else if (c != "All Color" && f == "" && s == "") {
+                    imageUrl = "https://loremflickr.com/$c/$w/$h"
+                } else if ( c == "All Color" && f != "" && s == "") {
+                    imageUrl = "https://loremflickr.com/$w/$h/$f"
+                } else if ( c != "All Color" && f != "" && s == "") {
+                    imageUrl = "https://loremflickr.com/$c/$w/$h/$f"
+                }  else if ( c == "All Color" && f != "" && o == "or") {
+                    imageUrl = "https://loremflickr.com/$w/$h/$f,$s"
+                } else if ( c != "All Color" && f != "" && o == "or") {
+                    imageUrl = "https://loremflickr.com/$c/$w/$h/$f,$s"
+                } else if ( c == "All Color" && f != "" && o == "and") {
+                    imageUrl = "https://loremflickr.com/$w/$h/$f,$s/all"
+                } else if ( c != "All Color" && f != "" && o == "and") {
+                    imageUrl = "https://loremflickr.com/$c/$w/$h/$f,$s/all"
+                } else {
+                    imageUrl = "https://loremflickr.com/$w/$h"
                 }
             }
-
+        ) {
+            Text("Display Image")
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp)
+        ) {
+            if (imageUrl.isNotEmpty()) {
+                DisplayImage(url = imageUrl, modifier = Modifier.fillMaxSize())
+            }
         }
     }
 }
-
 
 @Composable
 fun DisplayImage(
@@ -157,9 +216,11 @@ fun DisplayImage(
 
 
 @Composable
-fun CategoryDropdown(
-    category: String,
-    onCategorySelected: (String) -> Unit
+fun ColorDropdown(
+    color: String,
+    modifier: Modifier = Modifier,
+    onCategorySelected: (String) -> Unit,
+
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -167,10 +228,10 @@ fun CategoryDropdown(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically)
     {
-        Text("Category:  ", fontWeight = FontWeight.Medium, fontSize = 20.sp)
+        Text("Color:  ", fontWeight = FontWeight.Medium, fontSize = 20.sp)
         Text(
-                category,
-        modifier = Modifier.clickable { expanded = true }, fontSize = 20.sp
+            color,
+            modifier = Modifier.clickable { expanded = true }, fontSize = 20.sp
         )
         IconButton(onClick = { expanded = true }) {
             Icon(
@@ -193,58 +254,93 @@ fun CategoryDropdown(
                 .wrapContentHeight()
         ) {
             DropdownMenuItem(onClick = {
-                onCategorySelected("movie")
+                onCategorySelected("All Color")
                 expanded = false
             }) {
-                Text("Movie")
+                Text("All color")
             }
             DropdownMenuItem(onClick = {
-                onCategorySelected("game")
+                onCategorySelected("Grey")
                 expanded = false
             }) {
-                Text("Game")
+                Text("Grey")
             }
             DropdownMenuItem(onClick = {
-                onCategorySelected("album")
+                onCategorySelected("Red")
                 expanded = false
             }) {
-                Text("Album")
+                Text("Red")
             }
             DropdownMenuItem(onClick = {
-                onCategorySelected("book")
+                onCategorySelected("Green")
                 expanded = false
             }) {
-                Text("Book")
+                Text("Green")
             }
             DropdownMenuItem(onClick = {
-                onCategorySelected("face")
+                onCategorySelected("Blue")
                 expanded = false
             }) {
-                Text("Face")
+                Text("Blue")
             }
             DropdownMenuItem(onClick = {
-                onCategorySelected("fashion")
+                onCategorySelected("Pixel")
                 expanded = false
             }) {
-                Text("Fashion")
+                Text("Pixel")
+            }
+        }
+    }
+}
+
+@Composable
+fun OperationDropdown(
+    operation: String,
+    modifier: Modifier = Modifier,
+    onCategorySelected: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically)
+    {
+        Text("Relation of 2 Keyword(optional):  ", fontWeight = FontWeight.Medium, fontSize = 20.sp)
+        Text(
+            operation,
+            modifier = Modifier.clickable { expanded = true }, fontSize = 20.sp
+        )
+        IconButton(onClick = { expanded = true }) {
+            Icon(
+                imageVector = Icons.Default.ArrowDropDown,
+                contentDescription = "Expand category dropdown"
+            )
+        }
+    }
+
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.CenterStart
+    ) {
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            DropdownMenuItem(onClick = {
+                onCategorySelected("and")
+                expanded = false
+            }) {
+                Text("and")
             }
             DropdownMenuItem(onClick = {
-                onCategorySelected("shoes")
+                onCategorySelected("or")
                 expanded = false
             }) {
-                Text("Shoes")
-            }
-            DropdownMenuItem(onClick = {
-                onCategorySelected("watch")
-                expanded = false
-            }) {
-                Text("Watch")
-            }
-            DropdownMenuItem(onClick = {
-                onCategorySelected("furniture")
-                expanded = false
-            }) {
-                Text("Furniture")
+                Text("or")
             }
         }
     }
