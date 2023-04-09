@@ -149,6 +149,7 @@ fun DisplayImage(
             contentDescription = "",
             contentScale = ContentScale.FillBounds,
             placeholder = painterResource(R.drawable.loading_img),
+            error = painterResource(R.drawable.ic_broken_image),
             modifier = Modifier.align(Alignment.Center)
         )
     }
