@@ -18,10 +18,16 @@ These are the functions of the application.
 ## Link to the video demonstration 
 LinkVideo = > [Click Here.](https://youtu.be/Ov8B12nG7io)
 
-## Example Display QuizGame
+## Example Display Random Image App
 
 ### Main Screen of the Application
-<img src = "MainScreen.png" alt ="MainScreen" width = "25%" Height ="25%">
+<img src = "domo/main_screen.png" alt ="MainScreen" width = "25%" Height ="25%">
 
-### Generated Picture from the Application
-<img src = "GeneratePic.png" alt ="GenPic" width = "25%" Height ="25%">
+### Error Screen
+<img src = "domo/error.png" alt ="Error" width = "25%" Height ="25%">
+
+### Random Image with 2 keyword and select color
+<img src = "domo/2withcolor_or.png" alt ="Gen Img with 2 key" width = "25%" Height ="25%">
+
+### Random Image with 1 keyword
+<img src = "domo/1withallcolor.png" alt ="Gen Img with 1 key" width = "25%" Height ="25%">
