@@ -6,7 +6,7 @@
 #### Pavisa Sirirojvorakul 6310620064
 
 # Mobile Application function
-This andriod application users will be able to generate a picture by inputing information to the application.
+In this Android application, users will be able to generate a picture by inputting information into the application. 
 These are the functions of the application.
 
 ###### 1.Users can choose the size of the image, and if the user enters an incorrect size, the program will display a warning message and prompt for a new value.
