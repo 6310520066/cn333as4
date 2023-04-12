@@ -16,7 +16,38 @@ These are the functions of the application.
 
 
 ## Link to the video demonstration 
-LinkVideo = > [Click Here.](https://youtu.be/Ov8B12nG7io)
+LinkVideo as below
+
+[![Click Here.](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/Ov8B12nG7io)
+
+## How to run this application
+1. Clone this project to your android studio
+  ```
+  git clone https://github.com/6310520066/cn333as4.git
+  ```
+
+2. Make sure you are in master branch
+  ```
+  git checkout master
+  ```
+
+3. Build this project
+  ```
+  ⌘ + fn + F9 (Mac) OR Shift + F9 (Windows)
+  ```
+
+4. Run application
+  ```
+  ⌘ + fn + F10 (Mac) OR Shift + F10 (Windows)
+  ```
+  
+OR
+ 
+Import project from version control select GIT and link of repository as follow
+```
+https://github.com/6310520066/cn333as4.git
+```
+
 
 ## Example Display Random Image App
 
