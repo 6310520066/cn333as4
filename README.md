@@ -9,6 +9,8 @@
 In this Android application, users will be able to generate a picture by inputting information into the application. 
 These are the functions of the application.
 
+Application random image from [**LoremFlickr**](https://loremflickr.com)
+
 1. Users can choose the size of the image, and if the user enters an incorrect size, the program will display a warning message and prompt for a new value.
 1. Users can select the type of image from the options.
 1. Once the user inputs and selects complete and correct data, they can press the display image button.
