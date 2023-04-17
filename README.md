@@ -54,13 +54,13 @@ https://github.com/6310520066/cn333as4.git
 ## Example Display Random Image App
 
 #### Main Screen of the Application
-<img src = "domo/main_screen.png" alt ="MainScreen" width = "25%" Height ="25%">
+<img src = "demo/main_screen.png" alt ="MainScreen" width = "25%" Height ="25%">
 
 #### Error Screen
-<img src = "domo/error.png" alt ="Error" width = "25%" Height ="25%">
+<img src = "demo/error.png" alt ="Error" width = "25%" Height ="25%">
 
 #### Random Image with 2 keyword and select color
-<img src = "domo/2withcolor_or.png" alt ="Gen Img with 2 key" width = "25%" Height ="25%">
+<img src = "demo/2withcolor_or.png" alt ="Gen Img with 2 key" width = "25%" Height ="25%">
 
 #### Random Image with 1 keyword
-<img src = "domo/1withallcolor.png" alt ="Gen Img with 1 key" width = "25%" Height ="25%">
+<img src = "demo/1withallcolor.png" alt ="Gen Img with 1 key" width = "25%" Height ="25%">
